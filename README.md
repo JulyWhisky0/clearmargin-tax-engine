@@ -1,5 +1,7 @@
 # ClearMargin 2026 US 1099 Tax & Platform Fee Engine
 
+[![Verify 2026 Tax & Fee Engine](https://github.com/JulyWhisky0/clearmargin-tax-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/JulyWhisky0/clearmargin-tax-engine/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/clearmargin-tax-engine.svg)](https://www.npmjs.com/package/clearmargin-tax-engine)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](./LICENSE)
 [![Node](https://img.shields.io/badge/Node-%3E%3D20-blue.svg)](https://nodejs.org)
 
@@ -24,12 +26,17 @@ This open-source package exposes the deterministic mathematical rules behind:
 
 ---
 
-## Quick Start
+## Installation
 
 ```bash
-npm run build
-npm test
+npm install clearmargin-tax-engine
 ```
+
+Zero runtime dependencies. Full TypeScript declarations (`dist/index.d.ts`) and ESM exports included.
+
+---
+
+## Quick Start
 
 ### 1. Calculate 2026 1099 Taxes (Federal + State + Quarterly)
 
@@ -95,6 +102,15 @@ console.log({
   taxSavedByDeductions: uber.deductionTaxSavings,
   effectiveHourlyAfterTax: uber.effectiveHourlyAfterTax,
 });
+```
+
+---
+
+## Local Development
+
+```bash
+npm install
+npm test
 ```
 
 ---

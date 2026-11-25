@@ -19,7 +19,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && node tests/verify.mjs",
-    "verify": "node tests/verify.mjs"
+    "verify": "node tests/verify.mjs",
+    "prepublishOnly": "npm test"
   },
   "keywords": [
     "1099-tax",
@@ -39,7 +40,11 @@
   "bugs": {
     "url": "https://github.com/JulyWhisky0/clearmargin-tax-engine/issues"
   },
+  "author": "JulyWhisky0 <JulyWhisky0@users.noreply.github.com>",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=20"
   },
