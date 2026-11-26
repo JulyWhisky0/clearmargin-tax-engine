@@ -21,7 +21,7 @@ export const IRS_SOURCES_2026 = {
     authority: 'IRS',
   },
   mileageRates: {
-    label: 'IRS Standard Mileage Rates (2026 Business Rate)',
+    label: 'IRS Standard Mileage Rates (2026: $0.725/mi Jan–Jun & $0.76/mi Jul–Dec, Announcement 2026-11)',
     url: 'https://www.irs.gov/tax-professionals/standard-mileage-rates',
     authority: 'IRS',
   },

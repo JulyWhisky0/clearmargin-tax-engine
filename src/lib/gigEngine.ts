@@ -1,12 +1,20 @@
 import type { FilingStatus } from '../data/federalTax2026.js';
-import { IRS_2026_MILEAGE_RATE } from '../data/gigPlatforms.js';
+import {
+  IRS_2026_MILEAGE_RATE_H1,
+  IRS_2026_MILEAGE_RATE_H2,
+} from '../data/gigPlatforms.js';
 import { calculateFederalAndState1099 } from './taxEngine.js';
 
 export interface GigTaxInput {
   grossRevenue: number;
   platformFeePct: number; // decimal fraction, e.g. 0.20 for 20%
   supportsMileage: boolean;
+  /** Total annual business miles (split 50/50 across H1 & H2 if milesH1/milesH2 are omitted) */
   milesDriven: number;
+  /** Optional Jan 1 – Jun 30, 2026 business miles deducted at $0.725/mi (IRS Notice 2026-10) */
+  milesH1?: number;
+  /** Optional Jul 1 – Dec 31, 2026 business miles deducted at $0.76/mi (IRS Announcement 2026-11) */
+  milesH2?: number;
   otherExpenses: number;
   hoursPerWeek: number;
   stateSlug: string;
@@ -19,6 +27,10 @@ export interface GigTaxResult {
   grossRevenue: number;
   platformFee: number;
   netPayoutBeforeExpenses: number;
+  milesH1: number;
+  milesH2: number;
+  mileageDeductionH1: number;
+  mileageDeductionH2: number;
   mileageDeduction: number;
   otherExpenses: number;
   totalDeductions: number;
@@ -62,8 +74,22 @@ export function calculateGigTax(input: GigTaxInput): GigTaxResult {
   const platformFee = grossRevenue * feePct;
   const netPayoutBeforeExpenses = Math.max(0, grossRevenue - platformFee);
 
-  const milesDriven = input.supportsMileage ? clampNonNeg(input.milesDriven) : 0;
-  const mileageDeduction = input.supportsMileage ? milesDriven * IRS_2026_MILEAGE_RATE : 0;
+  let milesH1 = 0;
+  let milesH2 = 0;
+  if (input.supportsMileage) {
+    if (input.milesH1 !== undefined || input.milesH2 !== undefined) {
+      milesH1 = clampNonNeg(input.milesH1 ?? 0);
+      milesH2 = clampNonNeg(input.milesH2 ?? 0);
+    } else {
+      const totalMiles = clampNonNeg(input.milesDriven);
+      milesH1 = totalMiles / 2;
+      milesH2 = totalMiles / 2;
+    }
+  }
+
+  const mileageDeductionH1 = milesH1 * IRS_2026_MILEAGE_RATE_H1;
+  const mileageDeductionH2 = milesH2 * IRS_2026_MILEAGE_RATE_H2;
+  const mileageDeduction = mileageDeductionH1 + mileageDeductionH2;
   const otherExpenses = clampNonNeg(input.otherExpenses);
   const totalDeductions = mileageDeduction + otherExpenses;
 
@@ -98,6 +124,10 @@ export function calculateGigTax(input: GigTaxInput): GigTaxResult {
     grossRevenue,
     platformFee,
     netPayoutBeforeExpenses,
+    milesH1,
+    milesH2,
+    mileageDeductionH1,
+    mileageDeductionH2,
     mileageDeduction,
     otherExpenses,
     totalDeductions,

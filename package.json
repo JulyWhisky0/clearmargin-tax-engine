@@ -1,6 +1,6 @@
 {
   "name": "clearmargin-tax-engine",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Audited 2026 US 1099 self-employment tax (IRS Schedule SE + 51 jurisdictions), gig mileage, and 23-platform reverse-pricing TypeScript engine powering ClearMargin.",
   "type": "module",
   "main": "./dist/index.js",

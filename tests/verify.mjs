@@ -5,6 +5,9 @@ import {
   PLATFORMS,
   GIG_PLATFORMS,
   IRS_2026_MILEAGE_RATE,
+  IRS_2026_MILEAGE_RATE_H1,
+  IRS_2026_MILEAGE_RATE_H2,
+  IRS_2026_MILEAGE_RATE_BLENDED,
   IRS_SOURCES_2026,
   PLATFORM_FEE_SOURCES,
   GIG_SOURCES,
@@ -22,7 +25,10 @@ console.log('Running clearmargin-tax-engine 2026 verification suite...');
 assert.equal(STATE_TAXES_2026.length, 51, `Expected 51 jurisdictions (50 states + DC), got ${STATE_TAXES_2026.length}`);
 assert.equal(PLATFORMS.length, 23, `Expected 23 marketplace & payment platforms, got ${PLATFORMS.length}`);
 assert.equal(GIG_PLATFORMS.length, 7, `Expected 7 gig & creator verticals, got ${GIG_PLATFORMS.length}`);
-assert.equal(IRS_2026_MILEAGE_RATE, 0.70, 'Expected 2026 IRS business mileage rate of $0.70/mile');
+assert.equal(IRS_2026_MILEAGE_RATE_H1, 0.725, 'Expected H1 2026 IRS business mileage rate of $0.725/mile');
+assert.equal(IRS_2026_MILEAGE_RATE_H2, 0.76, 'Expected H2 2026 IRS business mileage rate of $0.76/mile');
+assert.equal(IRS_2026_MILEAGE_RATE_BLENDED, 0.7425, 'Expected 50/50 blended 2026 IRS business mileage rate of $0.7425/mile');
+assert.equal(IRS_2026_MILEAGE_RATE, 0.76, 'Expected active H2 2026 IRS business mileage rate of $0.76/mile');
 
 for (const p of PLATFORMS) {
   assert.ok(PLATFORM_FEE_SOURCES[p.slug]?.url, `Missing official fee source URL for platform "${p.slug}"`);
@@ -163,7 +169,7 @@ const stripeAch = calculatePlatformFees(stripe, { salePrice: 2000, tierId: 'ach-
 assert.equal(stripeAch.processingFee, 5, 'Expected Stripe ACH fee on $2,000 invoice to cap at $5.00');
 assert.equal(stripeAch.netProfit, 1995);
 
-// 8. Gig economy & creator engine verification (Uber $0.70/mi + OnlyFans 20% cut)
+// 8. Gig economy & creator engine verification (Uber 2026 split $0.725 H1 / $0.76 H2 + OnlyFans 20% cut)
 const uberRes = calculateGigTax({
   grossRevenue: 52000,
   platformFeePct: 0,
@@ -175,9 +181,24 @@ const uberRes = calculateGigTax({
   filingStatus: 'single',
   applyQbiDeduction: true,
 });
-assert.equal(uberRes.mileageDeduction, 28000 * 0.7);
+assert.equal(uberRes.mileageDeduction, 28000 * 0.7425);
 assert.ok(uberRes.deductionTaxSavings > 0);
 assert.ok(!Number.isNaN(uberRes.totalTax) && uberRes.netTakeHome > 0);
+
+const uberSplitRes = calculateGigTax({
+  grossRevenue: 52000,
+  platformFeePct: 0,
+  supportsMileage: true,
+  milesDriven: 28000,
+  milesH1: 10000,
+  milesH2: 18000,
+  otherExpenses: 2400,
+  hoursPerWeek: 35,
+  stateSlug: 'california',
+  filingStatus: 'single',
+  applyQbiDeduction: true,
+});
+assert.equal(uberSplitRes.mileageDeduction, 10000 * 0.725 + 18000 * 0.76);
 
 const onlyfansRes = calculateGigTax({
   grossRevenue: 100000,

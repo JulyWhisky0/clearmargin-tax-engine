@@ -1,4 +1,12 @@
-export const IRS_2026_MILEAGE_RATE = 0.70;
+/** IRS Notice 2026-10: Jan 1 – Jun 30, 2026 business standard mileage rate ($0.725/mile) */
+export const IRS_2026_MILEAGE_RATE_H1 = 0.725;
+/** IRS Announcement 2026-11: Jul 1 – Dec 31, 2026 mid-year business standard mileage rate ($0.76/mile) */
+export const IRS_2026_MILEAGE_RATE_H2 = 0.76;
+/** Equal 50/50 full-year blended reference rate ($0.7425/mile) when annual miles are split evenly across H1 & H2 */
+export const IRS_2026_MILEAGE_RATE_BLENDED =
+  Math.round(((IRS_2026_MILEAGE_RATE_H1 + IRS_2026_MILEAGE_RATE_H2) / 2) * 10000) / 10000;
+/** Active H2 2026 IRS business standard mileage rate (effective July 1, 2026) */
+export const IRS_2026_MILEAGE_RATE = IRS_2026_MILEAGE_RATE_H2;
 
 export interface GigFaq {
   q: string;
@@ -31,7 +39,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
     name: 'Uber',
     roleLabel: 'Rideshare Driver',
     tagline:
-      'Calculate 2026 Uber 1099-NEC & 1099-K self-employment taxes, $0.70/mile IRS mileage deductions, quarterly payments, and net hourly take-home pay.',
+      'Calculate 2026 Uber 1099-NEC & 1099-K self-employment taxes, split 2026 IRS mileage deductions ($0.725/mi Jan–Jun & $0.76/mi Jul–Dec), quarterly payments, and net hourly take-home pay.',
     supportsMileage: true,
     defaultGrossRevenue: 52000,
     defaultMiles: 28000,
@@ -43,7 +51,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
     platformFeeNote:
       'Uber driver 1099-NEC payouts and bank deposits already reflect net driver pay after Uber booking/service fees, so Platform Cut defaults to 0%. If you input gross rider fares from your Uber Annual Tax Summary, include Uber service fees in Other Schedule C Expenses.',
     commonDeductions: [
-      'IRS Standard Mileage ($0.70/mi in 2026) for all online, pickup, and repositioning miles',
+      'IRS Standard Mileage ($0.725/mi Jan 1–Jun 30 & $0.76/mi Jul 1–Dec 31, 2026) for all online, pickup, and repositioning miles',
       'Business share of smartphone hardware and monthly unlimited wireless plan',
       'Highway tolls, airport queue fees, and business parking paid while driving',
       'Dual-facing dashcam, magnetic phone mount, fast chargers, and passenger water/snacks',
@@ -51,15 +59,15 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
       'Rideshare insurance endorsement difference, mileage-tracking app, and tax software',
     ],
     tips: [
+      'Split your 2026 odometer log at June 30 / July 1: under IRS Announcement 2026-11, miles driven Jan–Jun deduct at $0.725/mi while Jul–Dec miles deduct at $0.76/mi.',
       'Track every deadhead mile from the moment you go online until your final drop-off—app-reported "trip miles" miss up to 35% of deductible driving.',
-      'Do not double-count gas, oil changes, tires, or auto insurance on top of the $0.70/mile standard rate; those vehicle costs are already built in.',
-      'Set aside your estimated quarterly tax out of weekly payouts into a dedicated high-yield savings account before Form 1040-ES deadlines.',
+      'Do not double-count gas, oil changes, tires, or auto insurance on top of the 2026 standard mileage rate ($0.725/$0.76/mi); those vehicle costs are already built in.',
     ],
     rivals: ['lyft', 'doordash', 'instacart', 'amazon-flex'],
     faqs: [
       {
         q: 'How much should Uber drivers set aside for taxes in 2026?',
-        a: 'After claiming the 2026 $0.70/mile standard mileage deduction and wireless/supply write-offs, many full-time Uber drivers owe roughly 12% to 20% of their gross payouts in combined self-employment (15.3%) and federal/state income tax, depending on state rates and filing status.',
+        a: 'After claiming the 2026 IRS standard mileage deduction ($0.725/mi Jan–Jun and $0.76/mi Jul–Dec) and wireless/supply write-offs, many full-time Uber drivers owe roughly 10% to 18% of their gross payouts in combined self-employment (15.3%) and federal/state income tax, depending on state rates and filing status.',
       },
       {
         q: 'Why does Uber issue both a 1099-K and a 1099-NEC?',
@@ -67,11 +75,11 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
       },
       {
         q: 'Can Uber drivers deduct deadhead miles between rides?',
-        a: 'Yes. Once you are online and actively available for trips—driving to pickup locations, returning from drop-offs, or repositioning to busy zones—those business miles qualify for the $0.70/mile deduction in 2026.',
+        a: 'Yes. Once you are online and actively available for trips—driving to pickup locations, returning from drop-offs, or repositioning to busy zones—those business miles qualify for the 2026 IRS rate ($0.725/mi through June 30 and $0.76/mi starting July 1, 2026).',
       },
       {
-        q: 'Should Uber drivers use the $0.70/mile rate or actual car expenses?',
-        a: 'Most rideshare drivers save significantly more with the $0.70/mile IRS standard rate, especially in fuel-efficient hybrids or older vehicles. You must choose standard mileage in the first year you place a vehicle into rideshare service if you want the option to switch later.',
+        q: 'Should Uber drivers use the 2026 standard mileage rate ($0.725/$0.76/mi) or actual car expenses?',
+        a: 'Most rideshare drivers save significantly more with the 2026 IRS standard rate ($0.725/mi Jan–Jun, raised mid-year to $0.76/mi Jul–Dec), especially in fuel-efficient hybrids or older vehicles. You must choose standard mileage in the first year you place a vehicle into rideshare service if you want the option to switch later.',
       },
     ],
   },
@@ -80,7 +88,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
     name: 'DoorDash',
     roleLabel: 'Delivery Dasher',
     tagline:
-      'Estimate 2026 DoorDash 1099-NEC taxes, $0.70/mile delivery mileage savings, quarterly IRS installments, and true after-tax hourly earnings.',
+      'Estimate 2026 DoorDash 1099-NEC taxes, split 2026 IRS mileage savings ($0.725/mi Jan–Jun & $0.76/mi Jul–Dec), quarterly IRS installments, and true after-tax hourly earnings.',
     supportsMileage: true,
     defaultGrossRevenue: 36000,
     defaultMiles: 21000,
@@ -92,7 +100,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
     platformFeeNote:
       'DoorDash Form 1099-NEC reports your net Dasher earnings (base pay, peak pay, challenges, and 100% of customer tips) directly with 0% platform commission withheld.',
     commonDeductions: [
-      'IRS Standard Mileage ($0.70/mi in 2026) from restaurant dispatch to drop-off and hotspot return',
+      'IRS Standard Mileage ($0.725/mi Jan 1–Jun 30 & $0.76/mi Jul 1–Dec 31, 2026) from restaurant dispatch to drop-off and hotspot return',
       'Insulated thermal delivery bags, pizza bags, and sturdy drink carriers',
       'Business percentage of your smartphone purchase and monthly cellular data plan',
       'Fast Pay instant cashout fees and bank transfer charges',
@@ -100,8 +108,8 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
       'Mileage tracking subscription (Stride, Gridwise, Everlance) and tax prep fees',
     ],
     tips: [
+      'Separate your 2026 delivery mileage log by half-year: IRS Announcement 2026-11 increased the business rate from $0.725/mi (Jan–Jun) to $0.76/mi starting July 1, 2026.',
       'Start your mileage tracker when you leave to pick up your first order and stop only when you end your Dash—DoorDash only estimates active delivery miles.',
-      'Skip Fast Pay fees when possible or record every $1.99 instant transfer fee as a deductible Schedule C bank/merchant charge.',
       'Monitor your net earnings per total mile: if a batch pays under $1.25/mile round-trip, vehicle depreciation and SE tax can wipe out your margin.',
     ],
     rivals: ['uber', 'instacart', 'amazon-flex', 'lyft'],
@@ -116,7 +124,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
       },
       {
         q: 'Can Dashers deduct insulated hot bags and phone plans?',
-        a: 'Yes. Thermal bags, drink caddies, phone mounts, and the business-use percentage of your cell phone bill are ordinary and necessary Schedule C expenses you can deduct alongside the $0.70/mile standard mileage rate.',
+        a: 'Yes. Thermal bags, drink caddies, phone mounts, and the business-use percentage of your cell phone bill are ordinary and necessary Schedule C expenses you can deduct alongside the 2026 standard mileage rate ($0.725/mi Jan–Jun & $0.76/mi Jul–Dec).',
       },
       {
         q: 'Do DoorDash drivers qualify for the 20% QBI deduction?',
@@ -129,7 +137,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
     name: 'Instacart',
     roleLabel: 'Full-Service Shopper',
     tagline:
-      'Calculate 2026 Instacart Shopper 1099-NEC taxes, $0.70/mile grocery delivery deductions, equipment write-offs, and net hourly pay.',
+      'Calculate 2026 Instacart Shopper 1099-NEC taxes, split 2026 IRS delivery mileage deductions ($0.725/mi Jan–Jun & $0.76/mi Jul–Dec), equipment write-offs, and net hourly pay.',
     supportsMileage: true,
     defaultGrossRevenue: 34000,
     defaultMiles: 16500,
@@ -141,7 +149,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
     platformFeeNote:
       'Instacart issues Form 1099-NEC for your full batch pay, heavy-order bumps, and customer tips with 0% commission subtracted from your reported payout.',
     commonDeductions: [
-      'IRS Standard Mileage ($0.70/mi in 2026) driving between stores and customer drop-offs',
+      'IRS Standard Mileage ($0.725/mi Jan 1–Jun 30 & $0.76/mi Jul 1–Dec 31, 2026) driving between stores and customer drop-offs',
       'Collapsible grocery wagon, stair-climbing cart, and heavy-duty tote crates',
       'Insulated freezer bags, ice packs, and temperature-controlled coolers',
       'Business share of smartphone hardware, unlimited data plan, and portable power banks',
@@ -149,8 +157,8 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
       'Mileage-tracking apps, gloves/rain gear, and Schedule C tax preparation software',
     ],
     tips: [
+      'Split your 2026 mileage log at July 1: business miles driven Jan 1–Jun 30 deduct at $0.725/mi while Jul 1–Dec 31 miles qualify for the $0.76/mi mid-year IRS rate.',
       'Instacart involves substantial in-store shopping time, so your miles-per-dollar are lower than rideshare—make sure you capture every phone, wagon, and cooler deduction.',
-      'Keep receipts for folding delivery wagons and freezer bags; tools used exclusively for batches are 100% deductible in the year purchased.',
       'Check whether you also drive for DoorDash or Uber—keep one unified mileage log across apps without overlapping or double-counting miles.',
     ],
     rivals: ['doordash', 'amazon-flex', 'uber', 'lyft'],
@@ -178,7 +186,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
     name: 'Amazon Flex',
     roleLabel: 'Parcel Delivery Partner',
     tagline:
-      'Calculate 2026 Amazon Flex 1099-NEC taxes, block mileage deductions at $0.70/mile, quarterly IRS estimates, and real after-tax hourly pay.',
+      'Calculate 2026 Amazon Flex 1099-NEC taxes, split 2026 IRS block mileage deductions ($0.725/mi Jan–Jun & $0.76/mi Jul–Dec), quarterly IRS estimates, and real after-tax hourly pay.',
     supportsMileage: true,
     defaultGrossRevenue: 42000,
     defaultMiles: 24000,
@@ -190,7 +198,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
     platformFeeNote:
       'Amazon Flex pays your full block offer plus Fresh/Whole Foods tips on Form 1099-NEC with 0% platform commission deducted.',
     commonDeductions: [
-      'IRS Standard Mileage ($0.70/mi in 2026) from pickup station through final parcel delivery',
+      'IRS Standard Mileage ($0.725/mi Jan 1–Jun 30 & $0.76/mi Jul 1–Dec 31, 2026) from pickup station through final parcel delivery',
       'Folding hand truck, parcel sorting totes, and trunk cargo organizers',
       'Headlamp, reflective safety vest, and weatherproof delivery boots/rain jacket',
       'Business portion of smartphone, unlimited data plan, and dash mount/chargers',
@@ -198,7 +206,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
       'Mileage tracking app subscription and Schedule C bookkeeping/tax filing tools',
     ],
     tips: [
-      'Always log odometer readings at the Amazon warehouse before scanning packages—high-mileage suburban blocks frequently generate $0.70/mile write-offs exceeding 35% of gross pay.',
+      'Log odometer readings separately before and after July 1, 2026—high-mileage suburban blocks generate $0.725/mi (H1) and $0.76/mi (H2) write-offs often exceeding 40% of gross pay.',
       'Be conservative on commuting miles: driving from home to your first warehouse pickup may be non-deductible commuting unless you maintain a qualifying administrative home office.',
       'Factor return-trip miles after your last stop when evaluating whether a base-rate block actually beats your local after-tax minimum wage.',
     ],
@@ -209,16 +217,16 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
         a: 'Under IRS commuting rules, driving from home to your first regular pickup station is generally commuting unless your home qualifies as your principal place of business (administrative home office). Miles between the warehouse, every customer stop, and between multiple blocks are fully deductible.',
       },
       {
-        q: 'How much does the $0.70/mile deduction save an Amazon Flex driver?',
-        a: 'At 24,000 business miles per year, the 2026 IRS rate creates a $16,800 Schedule C write-off. Because every dollar of Schedule C expense reduces both 15.3% self-employment tax and your marginal income tax bracket, that single deduction often cuts your annual IRS bill by $3,500 to $5,000+.',
+        q: 'How much does the 2026 IRS mileage deduction ($0.725/$0.76/mi) save an Amazon Flex driver?',
+        a: 'At 24,000 business miles split evenly across the year (12,000 mi Jan–Jun at $0.725/mi + 12,000 mi Jul–Dec at $0.76/mi), the 2026 IRS rates create a $17,820 Schedule C write-off. Because every dollar of Schedule C expense reduces both 15.3% self-employment tax and your marginal income tax bracket, that deduction often cuts your annual IRS bill by $3,800 to $5,500+.',
       },
       {
         q: 'Are Whole Foods and Amazon Fresh tips included on my 1099-NEC?',
         a: 'Yes. Amazon combines base block pay and customer tips from Fresh/Whole Foods routes into one Form 1099-NEC total.',
       },
       {
-        q: 'Can I deduct car repairs and gas if I claim $0.70 per mile?',
-        a: 'No. The $0.70/mile standard mileage rate replaces actual fuel, oil changes, tires, repairs, registration, and vehicle depreciation. You can still deduct tolls, parking, sorting gear, and your business phone share separately.',
+        q: 'Can I deduct car repairs and gas if I claim the 2026 IRS standard mileage rate?',
+        a: 'No. The 2026 standard mileage rate ($0.725/mi Jan–Jun and $0.76/mi Jul–Dec) replaces actual fuel, oil changes, tires, repairs, registration, and vehicle depreciation. You can still deduct tolls, parking, sorting gear, and your business phone share separately.',
       },
     ],
   },
@@ -227,7 +235,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
     name: 'Lyft',
     roleLabel: 'Rideshare Driver',
     tagline:
-      'Estimate 2026 Lyft 1099-NEC & 1099-K self-employment taxes, $0.70/mile IRS mileage deductions, and real net take-home pay per hour.',
+      'Estimate 2026 Lyft 1099-NEC & 1099-K self-employment taxes, split 2026 IRS mileage deductions ($0.725/mi Jan–Jun & $0.76/mi Jul–Dec), and real net take-home pay per hour.',
     supportsMileage: true,
     defaultGrossRevenue: 48000,
     defaultMiles: 26000,
@@ -239,7 +247,7 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
     platformFeeNote:
       'Lyft bank deposits and net driver earnings exclude Lyft platform/service fees (0% cut needed when entering actual driver payouts). If you enter gross passenger charges from a 1099-K, include Lyft fees from your Annual Tax Summary as an expense.',
     commonDeductions: [
-      'IRS Standard Mileage ($0.70/mi in 2026) for online, en-route, and passenger trip miles',
+      'IRS Standard Mileage ($0.725/mi Jan 1–Jun 30 & $0.76/mi Jul 1–Dec 31, 2026) for online, en-route, and passenger trip miles',
       'Express Pay instant cashout fees and Lyft platform fees (if reporting gross 1099-K)',
       'Business percentage of smartphone hardware and unlimited cellular data plan',
       'Car washes, interior detailing, odor eliminators, and seat protectors',
@@ -247,9 +255,9 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
       'Rideshare insurance endorsement delta, tolls, airport fees, and tax software',
     ],
     tips: [
+      'Split your 2026 mileage log at July 1: under IRS Announcement 2026-11, Jan–Jun miles deduct at $0.725/mi while Jul–Dec miles deduct at $0.76/mi.',
       'Reconcile your Lyft Annual Summary against bank deposits before filing so you never accidentally pay tax on Lyft’s passenger-side platform fees shown on Form 1099-K.',
       'If you drive both Lyft and Uber in the same shift, track continuous online business mileage once—never claim the same trip mile on two Schedule C logs.',
-      'Keep receipts for interior detailing and seat covers; rideshare wear-and-tear cleaning expenses are deductible on top of the standard mileage rate.',
     ],
     rivals: ['uber', 'doordash', 'instacart', 'amazon-flex'],
     faqs: [
@@ -266,8 +274,8 @@ export const GIG_PLATFORMS: GigPlatformProfile[] = [
         a: 'You may combine all rideshare driving under one Schedule C rideshare business or separate logs, provided every business mile is counted strictly once when either app is online and actively working.',
       },
       {
-        q: 'How much tax does the 2026 $0.70/mile rate save a Lyft driver?',
-        a: 'Driving 26,000 business miles produces an $18,200 Schedule C deduction at $0.70/mi, typically cutting combined self-employment and federal/state income taxes by $3,800 to $5,800+ per year.',
+        q: 'How much tax does the 2026 IRS mileage rate ($0.725/$0.76/mi) save a Lyft driver?',
+        a: 'Driving 26,000 business miles split evenly across the year (13,000 mi H1 at $0.725/mi + 13,000 mi H2 at $0.76/mi) produces a $19,305 Schedule C deduction, typically cutting combined self-employment and federal/state income taxes by $4,100 to $6,200+ per year.',
       },
     ],
   },

@@ -11,7 +11,7 @@ This open-source package exposes the deterministic mathematical rules behind:
 - **2026 IRS Schedule SE & Federal Income Tax Engine** (92.35% SE taxable earnings factor, 12.4% Social Security up to the $184,500 2026 wage cap, 2.9% + 0.9% Medicare, 50% SE deduction, Section 199A 20% QBI deduction, and progressive Single / MFJ / HOH brackets)
 - **All 50 US States + District of Columbia (51 Jurisdictions)** with progressive brackets, flat rates, no-tax states, state standard deductions/exemptions, and federal-taxable-income conformity logic
 - **Freelance Hourly Rate & W-2 vs 1099 Equivalency Solvers**
-- **Gig Economy & Creator 1099 Engine (7 Verticals)** modeling the **2026 IRS $0.70/mile** standard business mileage deduction
+- **Gig Economy & Creator 1099 Engine (7 Verticals)** modeling the **2026 IRS split business mileage rates ($0.725/mile Jan–Jun & $0.76/mile Jul–Dec under IRS Announcement 2026-11)**
 - **23 Marketplace, SaaS & Payment Processor Fee Engines + Exact Reverse-Pricing Solvers** (handling discontinuous tiers such as Poshmark’s flat $2.95 cliff below $15 and Stripe ACH’s $5.00 cap)
 
 ---
@@ -90,6 +90,8 @@ const uber = calculateGigTax({
   platformFeePct: 0,
   supportsMileage: true,
   milesDriven: 28000,
+  milesH1: 14000, // Jan 1 – Jun 30, 2026 @ $0.725/mi (IRS Notice 2026-10)
+  milesH2: 14000, // Jul 1 – Dec 31, 2026 @ $0.76/mi (IRS Announcement 2026-11)
   otherExpenses: 2400,
   hoursPerWeek: 35,
   stateSlug: 'texas',
